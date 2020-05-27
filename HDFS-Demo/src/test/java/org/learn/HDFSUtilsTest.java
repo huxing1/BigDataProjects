@@ -32,7 +32,7 @@ public class HDFSUtilsTest {
     @Test
     public void readFSTest() throws IOException {
         HDFSUtil hdfsUtil=new HDFSUtil();
-        System.out.println(hdfsUtil.readFS("/input/test0527"));
+        System.out.println(hdfsUtil.readFS("/access-log/2020-05-27/access_4e714874-0fbc-48b5-9a42-8c38ea74fc89_.log"));
     }
 
     @Test
@@ -44,6 +44,6 @@ public class HDFSUtilsTest {
     @Test
     public void deleteFSTest() throws IOException {
         HDFSUtil hdfsUtil=new HDFSUtil();
-        hdfsUtil.deleteFS("/input/test0527",true);
+        hdfsUtil.deleteFS("/access-log/",true);
     }
 }

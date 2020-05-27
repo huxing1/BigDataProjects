@@ -36,6 +36,7 @@ public class HDFSUtil {
 
     /**
     * @Description: 读取HDFS文件并写入
+     * 注意这里不要用readUTF方法，因为很容易报EOFException的错误
     * @Param: [file]
     * @return: void
     * @Author: hux
@@ -44,12 +45,17 @@ public class HDFSUtil {
     public String readFS(String file) throws IOException {
         HDFSConn hdfsConn=new HDFSConn();
         FileSystem fileSystem=hdfsConn.initHDFS();
-        Path path = new Path(file);
-        FSDataInputStream dataInputStream = fileSystem.open(path);
-        String data = dataInputStream.readUTF();
-//        System.out.println(data);
-        dataInputStream.close();
-        return data;
+        Path remotePath = new Path(file);
+        FSDataInputStream inputStream = fileSystem.open(remotePath);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String line = null;
+        StringBuffer buffer = new StringBuffer();
+        while ((line = reader.readLine()) != null) {
+            buffer.append(line + "\n");
+        }
+        fileSystem.close();
+        return buffer.toString();
     }
 
     /**

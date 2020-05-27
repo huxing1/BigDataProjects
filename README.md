@@ -11,4 +11,10 @@
 * hbase api增删改查  
 >对应的hbase-client jar包的版本可以在hbase的lib目录下找到，比如我的： hbase-client-2.2.4.jar
 * 
+## 2.项目 HDFS-Demo
+### 2.1实现功能
+* hdfs api增删改查  
+>对应的jar包见相关的pom文件，主要方法在org.learn.Utils的HDFSUtil.java
+* 日志文件定时采集日志传输至HDFS
+>主要方法在org.learn.Task的DataColletTask.java和DataBackUpCleanTask.java方法中，入口在org.learn DataCollectMainApp.java中
 
