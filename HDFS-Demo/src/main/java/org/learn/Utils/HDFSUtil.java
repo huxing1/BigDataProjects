@@ -42,7 +42,7 @@ public class HDFSUtil {
     * @Author: hux
     * @Date: 2020/5/26
     */
-    public String readFS(String file) throws IOException {
+    public static String readFS(String file) throws IOException {
         HDFSConn hdfsConn=new HDFSConn();
         FileSystem fileSystem=hdfsConn.initHDFS();
         Path remotePath = new Path(file);
@@ -65,7 +65,7 @@ public class HDFSUtil {
     * @Author: hux
     * @Date: 2020/5/27
     */
-    public void deleteFS(String file,boolean recursive) throws IOException {
+    public static void deleteFS(String file, boolean recursive) throws IOException {
         HDFSConn hdfsConn=new HDFSConn();
         FileSystem fileSystem=hdfsConn.initHDFS();
         Path path = new Path(file);
@@ -99,5 +99,9 @@ public class HDFSUtil {
         IOUtils.copyBytes(inputStream,outputStream,4096,true);
     }
 
+    public static void main(String[] args) throws IOException {
+        System.out.print(readFS("/output/weatherdata/min/part-r-00000"));
+        System.out.println("ok");
+    }
 
 }
