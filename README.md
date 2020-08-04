@@ -72,3 +72,39 @@ job.setCombinerClass(MaxTemperatureReducer.class);
 
 * 当Hadoop集群有新节点加入时，正在运行的MapReduce作业自动识别并使用新节点；
 * 当新节点加入Hadoop集群后，再启动MapReduce作业，MapReduce作业也能自动识别并使用新节点
+## 5.项目 CommonFans
+> 实验来源：[实战案例玩转Hadoop系列13-Map Reduce进阶编程案例（计算共同好友）](https://zhuanlan.zhihu.com/p/50236955)
+
+基本步骤和上述的第5个项目基本一致
+### 需求描述
+
+某社交网站，有如下用户关系数据：
+
+```
+A:B,C,D,F,E,O
+B:A,C,E,K
+C:F,A,D,I
+D:A,E,F,L
+E:B,C,D,M,L
+F:A,B,C,D,E,O,M
+G:A,C,D,E,F
+H:A,C,D,E,O
+I:A,O
+J:B,O
+K:A,C,D
+L:D,E,F
+M:E,F,G
+O:A,H,I,J
+```
+样例数据说明：
+
+```
+A:B,C,D,F,E,O
+```
+
+每行数据以冒号为分隔符：
+
+* 冒号左边是网站的一个用户A；
+* 冒号右边是用户A的粉丝列表（关注用户A的粉丝，用逗号隔开）；
+
+现在，需要对网站的几十亿用户进行分析，找出哪些用户两两之间有共同的粉丝，以及他俩的共同粉丝都有哪些人。比如，A、B两个用户拥有共同粉丝C和E；

@@ -12,6 +12,7 @@
         <module>hbase-demo</module>
         <module>HDFS-Demo</module>
         <module>MapReduce-Demo</module>
+        <module>CommonFans</module>
     </modules>
     <build>
         <plugins>
