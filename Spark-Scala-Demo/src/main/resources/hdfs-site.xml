@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+<property>
+    <name>dfs.permissions.enabled</name>
+    <value>false</value>
+</property>
+ <property>
+            <name>dfs.nameservices</name>
+            <value>mycluster</value>
+    </property>
+    <!-- mycluster下面有两个NameNode，逻辑名分别设置为hmaster1，hmaster2，也可设置为nn1,nn2，后面的配置要统一引用该逻辑名 -->
+    <property>
+            <name>dfs.ha.namenodes.mycluster</name>
+            <value>nn1,nn2</value>
+    </property>
+    <!-- hmaster1的RPC通信地址 -->
+    <property>
+            <name>dfs.namenode.rpc-address.mycluster.nn1</name>
+            <value>test1:9000</value>
+    </property>
+    <!-- hmaster1的http通信地址 -->
+    <property>
+            <name>dfs.namenode.http-address.mycluster.nn1</name>
+            <value>test1:50070</value>
+    </property>
+    <!-- hmaster1的servicerpc通信地址 -->
+    <property>
+            <name> dfs.namenode.servicerpc-address.mycluster.nn1</name>
+            <value>test1:53310</value>
+    </property>
+    <!-- hmaster2的RPC通信地址 -->
+    <property>
+            <name>dfs.namenode.rpc-address.mycluster.nn2</name>
+            <value>test2:9000</value>
+    </property>
+    <!-- hmaster2的http通信地址 -->
+    <property>
+            <name>dfs.namenode.http-address.mycluster.nn2</name>
+            <value>test2:50070</value>
+    </property>
+    <!--hmaster2的servicerpc通信地址 -->
+    <property>
+            <name> dfs.namenode.servicerpc-address.mycluster.nn2</name>
+            <value>test2:53310</value>
+    </property>
+    <!-- 指定NameNode的元数据在JournalNode上的存放位置 -->
+    <property>
+            <name> dfs.namenode.name.dir </name>
+            <value>/usr/local/software/hadoop-3.2.1/hadoop/data01/mycluster</value>
+            <final>true</final>
+    </property>
+    <!-- 指定NameNode的元数据在JournalNode上的存放位置,必须是/home/hadoop/hadoop/sbin/hadoop-daemons.sh start journalnode启动的节点 -->
+    <property>
+            <name>dfs.namenode.shared.edits.dir</name>
+            <value>qjournal://test1:8485;test2:8485;test3:8485/mycluster</value>
+    </property>
+    <!-- 指定JournalNode在本地磁盘存放数据的位置 -->
+    <property>
+            <name>dfs.journalnode.edits.dir</name>
+            <value>/usr/local/software/hadoop-3.2.1/hadoop/journal/tmp</value>
+    </property>
+    <!-- 开启NameNode失败自动切换 -->
+    <property>
+            <name>dfs.ha.automatic-failover.enabled</name>
+            <value>true</value>
+    </property>
+    <!-- 配置失败自动切换实现方式 -->
+    <property>
+            <name>dfs.client.failover.proxy.provider.mycluster</name>
+            <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+    </property>
+    <!-- 配置隔离机制方法，多个机制用换行分割，即每个机制暂用一行-->
+    <property>
+            <name>dfs.ha.fencing.methods</name>
+            <value>
+                    sshfence
+                    shell(/bin/true)
+            </value>
+    </property>
+    <!-- 使用sshfence隔离机制时需要ssh免登陆 -->
+    <property>
+            <name>dfs.ha.fencing.ssh.private-key-files</name>
+            <value>/home/hadoop/.ssh/id_dsa</value>
+    </property>
+    <!-- 配置sshfence隔离机制超时时间 -->
+    <property>
+            <name>dfs.ha.fencing.ssh.connect-timeout</name>
+            <value>30000</value>
+    </property>
+    <!-- 指定DataNode数据的存放位置，建议一台机器挂多个盘，，一方面增大容量，另一方面减少磁盘单点故障及磁盘读写能力 -->
+    <property>
+            <name> dfs.datanode.data.dir </name>
+           	<value>/usr/local/software/hadoop-3.2.1/hadoop/data01/dn,/usr/local/software/hadoop-3.2.1/hadoop/data02/dn, /usr/local/software/hadoop-3.2.1/hadoop/data03/dn</value>
+            <final>true</final>
+    </property>
+  <property>
+            <name> dfs.namenode.checkpoint.dir.mycluster </name>
+           	<value>/usr/local/software/hadoop-3.2.1/hadoop/data01/dfs/namesecondary</value>
+            <final>true</final>
+    </property>
+    <!--每个DataNode上需预留的空间，给非hdfs使用，默认为0，Reserved space in bytes per volume -->
+    <property>
+            <name> dfs.datanode.du.reserved </name>
+           	<value>102400</value>
+            <final>true</final>
+    </property>
+    <!--限制hdfs负载均衡时占用的最大带宽Specifies the maximum amount of bandwidth that each datanode can utilize for the balancing purpose in term of the number of bytes per second. -->
+    <property>
+            <name>dfs.datanode.balance.bandwidthPerSec</name>
+           	<value>10485760000</value>
+    </property>
+
+</configuration>

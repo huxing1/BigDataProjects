@@ -13,6 +13,8 @@
         <module>HDFS-Demo</module>
         <module>MapReduce-Demo</module>
         <module>CommonFans</module>
+        <module>Spark-Demo</module>
+        <module>Spark-Scala-Demo</module>
     </modules>
     <build>
         <plugins>
