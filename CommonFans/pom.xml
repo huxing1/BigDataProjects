@@ -11,7 +11,7 @@
 
     <artifactId>CommonFans</artifactId>
     <properties>
-        <hadoopVersion>3.2.1</hadoopVersion>
+        <hadoopVersion>3.2.2</hadoopVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
